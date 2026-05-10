@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.orderbatch.mapper.OrderBatchMapper">
+
+    <!-- 배치 집계 결과 저장 -->
+    <insert id="insertBatchSummary" useGeneratedKeys="true" keyProperty="summaryId">
+        INSERT INTO order_batch_summary (
+            job_execution_id,
+            batch_date,
+            total_count,
+            success_count,
+            fail_count,
+            total_amount
+        ) VALUES (
+            #{jobExecutionId},
+            #{batchDate},
+            #{totalCount},
+            #{successCount},
+            #{failCount},
+            #{totalAmount}
+        )
+    </insert>
+
+    <!-- 에러 로그 저장 -->
+    <insert id="insertErrorLog" useGeneratedKeys="true" keyProperty="errorId">
+        INSERT INTO order_error_log (
+            order_id,
+            error_message,
+            step_name
+        ) VALUES (
+            #{orderId},
+            #{errorMessage},
+            #{stepName}
+        )
+    </insert>
+
+</mapper>
