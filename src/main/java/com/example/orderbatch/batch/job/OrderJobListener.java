@@ -65,7 +65,7 @@ public class OrderJobListener implements JobExecutionListener {
         // 집계 결과 DB 저장
         try {
             OrderBatchSummary summary = OrderBatchSummary.builder()
-                    .jobExecutionId(jobExecution.getId())
+                    .jobExecutionId(jobExecution.getId()) // JobExecution ID 저장
                     .batchDate(LocalDate.now())
                     .totalCount(totalRead)
                     .successCount(totalWrite)

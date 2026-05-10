@@ -1,17 +1,24 @@
 spring:
   datasource:
-    url: jdbc:h2:mem:orderdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
+#    url: jdbc:h2:mem:orderdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+#    driver-class-name: org.h2.Driver
+#    username: sa
+#    password:
+    # orderdb 부분에 실제 사용할 스키마(DB) 이름을 적어주세요.
+    url: jdbc:mysql://localhost:3306/orderdb?serverTimezone=Asia/Seoul&useSSL=false&allowPublicKeyRetrieval=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root        # MySQL 계정 아이디
+    password: test1234    # MySQL 계정 비밀번호
 
   h2:
     console:
-      enabled: true
+      enabled: false   # H2 콘솔 비활성화 (MySQL 사용 시)
       path: /h2-console
 
   sql:
     init:
+      # 로컬 MySQL에 이미 테이블이 있다면 'never'로 바꾸는 것이 안전합니다.
+      # 매번 초기화하고 싶다면 'always'를 유지하되, schema.sql에 'IF NOT EXISTS' 문구를 추가하세요.
       mode: always
       schema-locations:
         - classpath:schema.sql
@@ -37,6 +44,8 @@ logging:
     com.example.orderbatch: DEBUG
     org.springframework.batch: INFO
     org.mybatis: DEBUG
+    # SQL 실행 쿼리와 파라미터를 더 자세히 보고 싶을 때 추가
+    # org.springframework.jdbc.core.JdbcTemplate: DEBUG
 
 # 배치 청크 사이즈 설정
 batch:

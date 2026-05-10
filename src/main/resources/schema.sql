@@ -37,5 +37,5 @@ CREATE TABLE IF NOT EXISTS order_error_log (
 );
 
 -- 인덱스
-CREATE INDEX IF NOT EXISTS idx_orders_status ON orders(order_status);
-CREATE INDEX IF NOT EXISTS idx_orders_ordered_at ON orders(ordered_at);
+--CREATE INDEX IF NOT EXISTS idx_orders_status ON orders(order_status);
+--CREATE INDEX IF NOT EXISTS idx_orders_ordered_at ON orders(ordered_at);
