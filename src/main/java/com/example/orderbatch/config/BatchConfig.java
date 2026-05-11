@@ -2,6 +2,7 @@ package com.example.orderbatch.config;
 
 import com.example.orderbatch.batch.job.OrderJobListener;
 import com.example.orderbatch.batch.processor.OrderItemProcessor;
+import com.example.orderbatch.batch.processor.ProductOrderItemProcessor;
 import com.example.orderbatch.batch.step.OrderSkipListener;
 import com.example.orderbatch.batch.writer.OrderItemWriter;
 import com.example.orderbatch.domain.Order;
@@ -38,6 +39,7 @@ public class BatchConfig {
 
     private final SqlSessionFactory sqlSessionFactory;
     private final OrderItemProcessor orderItemProcessor;
+    private final ProductOrderItemProcessor productOrderItemProcessor;
     private final OrderItemWriter    orderItemWriter;
     private final OrderJobListener   orderJobListener;
     private final OrderSkipListener  orderSkipListener;
@@ -70,6 +72,7 @@ public class BatchConfig {
                 .<Order, Order>chunk(chunkSize, transactionManager)
                 .reader(orderItemReader())
                 .processor(orderItemProcessor)
+                .processor(productOrderItemProcessor)
                 .writer(orderItemWriter)
                 // Skip 정책: IllegalArgumentException 발생 시 최대 5건까지 스킵
                 .faultTolerant()

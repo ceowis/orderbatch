@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- ProductMapper.xml 상단 -->
+<mapper namespace="com.example.orderbatch.mapper.ProductMapper">
+    <insert id="upsertProductSalesSummary">
+        INSERT INTO product_sales_summary(
+        batch_date,
+        product_code,
+        product_name,
+        total_quantity,
+        total_revenue,
+        order_count
+        ) VALUES (
+        #{batchDate},
+        #{productCode},
+        #{productName},
+        #{totalQuantity},
+        #{totalRevenue},
+        #{orderCount}
+        )
+        ON DUPLICATE KEY UPDATE
+        total_quantity = total_quantity + VALUES(total_quantity),
+        total_revenue = total_revenue + VALUES(total_revenue),
+        order_count    = order_count + VALUES(order_count),
+        updated_at     = CURRENT_TIMESTAMP
+    </insert>
+</mapper>
